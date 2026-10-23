@@ -50,8 +50,7 @@ This script does NOT implement the ISD-based attack complexity of Theorem 2
 own 128-bit parameters; that has not been independently re-verified here
 for the new 192-/256-bit candidates. Treat the output as a well-justified
 ESTIMATE for a comparison table, not as authoritative cryptographic
-parameters -- ideally cross-check with a proper lattice estimator (e.g.
-https://github.com/malb/lattice-estimator) before using in a submission.
+parameters.
 """
 
 import math
@@ -171,14 +170,7 @@ def forgery_bits(k, p, q):
 
 def sizes_bytes(k, q, l_e, lam):
     """Uses ceil(log2(q)) per the paper's stated formulas exactly (Section 6):
-    PK = ceil((k*ceil(log2 q) + 2*lambda)/8), etc. Passing raw (non-ceiled)
-    log2(q) here was a bug in an earlier version of this script -- it silently
-    undercounts by up to a full bit/coordinate whenever q sits just above a
-    power-of-two boundary. Verified against the paper's own three rows: now
-    reproduces PK/SK/Sig exactly for rows 1-2, and SK/Sig exactly for row 3
-    (row 3's published PK=7520 looks like a copy-paste typo in the paper's
-    Table 2, since it's identical to that row's Sig, which the formula says
-    cannot happen -- Sig is always PK plus a positive extra term)."""
+    PK = ceil((k*ceil(log2 q) + 2*lambda)/8), etc."""
     log2_q_ceil = math.ceil(math.log2(q))
     log2_le = math.ceil(math.log2(2 * l_e + 1))
     pk = math.ceil((k * log2_q_ceil + 2 * lam) / 8)
@@ -189,9 +181,6 @@ def sizes_bytes(k, q, l_e, lam):
 
 # ---------------------------------------------------------------------
 # 6) q,p generation: q = ell*p + 1, q & p prime
-#    (this is what HQCS-R-2 / HQCS-R-3's published numbers satisfy exactly;
-#    HQCS-R-1's published p looks like a transcription/OCR error against
-#    this relationship -- see analysis notes)
 # ---------------------------------------------------------------------
 
 def find_q_p(log2_q, target_ell, tol=1.5, max_tries=4000):
