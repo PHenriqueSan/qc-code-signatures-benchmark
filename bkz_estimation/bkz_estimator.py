@@ -5,11 +5,8 @@ Extends Table 1 / Table 2 of Tan & Prabowo, "Hamming Metric Code-Based
 Signature Scheme With Restricted Vectors" (AsiaJCIS 2025), which only
 publishes concrete parameters for the 128-bit security level.
 
-WHAT THIS DOES DIFFERENTLY FROM A NAIVE LINEAR SCALING SCRIPT
----------------------------------------------------------------
-Sizes must come from an actual joint search over (k, q, p, l_e, omega_c)
-satisfying every constraint the paper imposes, not from extrapolating the
-single published 128-bit row. This script implements each constraint from
+Sizes come from an joint search over (k, q, p, l_e, omega_c)
+satisfying every constraint the paper imposes. This script implements each constraint from
 the paper directly:
 
   1. BKZ key-recovery hardness   -- Section 2.3 / 5.1
